@@ -1,0 +1,30 @@
+﻿# Backupfiles from mergetools #
+*.orig
+
+# Java Class Files #
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+
+# Eclipse #
+/.project
+/.settings
+bin/**
+
+# Visual Studio Code#
+/.vs
+
+# Maven #
+target/
+/.mvn
+/.maven
+/.repository
+.flattened-pom.xml
+/.idea
+
+
+
