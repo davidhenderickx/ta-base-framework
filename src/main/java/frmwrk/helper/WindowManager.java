@@ -10,7 +10,7 @@ import org.openqa.selenium.WindowType;
 import frmwrk.drivers.DriverManager;
 import frmwrk.reporters.Log;
 
-public class WindowHelper {
+public class WindowManager {
 
 	private static ThreadLocal<ArrayList<String>> windowHandles = ThreadLocal.withInitial(ArrayList::new);
 	private static ThreadLocal<ArrayList<String>> windowNames = ThreadLocal.withInitial(ArrayList::new);

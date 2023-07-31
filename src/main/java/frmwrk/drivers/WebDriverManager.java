@@ -2,6 +2,7 @@ package frmwrk.drivers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import frmwrk.enums.WebBrowser;
@@ -31,7 +32,9 @@ public class WebDriverManager {
 	public static void setChromeDriver() {
 		Log.info("Creating Chrome Driver");
 		killDriver();
-		ThreadDriver.set(new ChromeDriver());
+		ChromeOptions co = new ChromeOptions();
+		co.setBinary("C:\\Users\\dhenderickx\\Development\\Resources\\Selenium\\chrome-win64\\chrome.exe");
+		ThreadDriver.set(new ChromeDriver(co));
 	}
 
 	public static void setFirefoxDriver() {

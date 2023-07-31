@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import frmwrk.reporters.Log;
 
-public class ExpectedConditionsHelper {
+public class CustomExpectedConditions {
 
 	/**
 	 * Waits until the shadow dom is loaded

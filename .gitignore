@@ -26,5 +26,8 @@ target/
 .flattened-pom.xml
 /.idea
 
+# Project #
+/test-output
+
 
 

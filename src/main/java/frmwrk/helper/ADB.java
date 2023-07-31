@@ -1,21 +1,37 @@
 package frmwrk.helper;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import frmwrk.reporters.Log;
+
 public class ADB {
 
-	    /*private String ID;
+	    /**private String ID;
 
 	    public ADB(String deviceID){ID = deviceID;}
 
 	    public static String command(String command){
-	        MyLogger.log.debug("Formatting ADB Command: "+command);
-	        if(command.startsWith("adb")) command = command.replace("adb ", ServerManager.getAndroidHome()+"/platform-tools/adb ");
+	        Log.debug("Formatting ADB Command: "+command);
+	        if(command.startsWith("adb")) command = command.replace("adb ", System.getenv("ANDROID_HOME") + File.separator + "platform-tools" + File.separator +"adb");
 	        else throw new RuntimeException("This method is designed to run ADB commands only!");
-	        MyLogger.log.debug("Formatted ADB Command: "+command);
+	        Log.debug("Formatted ADB Command: "+command);
 	        String output = ServerManager.runCommand(command);
-	        MyLogger.log.debug("Output of the ADB Command: "+output);
+	        Log.debug("Output of the ADB Command: "+output);
 	        if(output == null) return "";
 	        else return output.trim();
 	    }
+	    
+	    public static String runCommand(String command){
+	        String output = null;
+	        try{
+	            Scanner scanner = new 
+	            Scanner(Runtime.getRuntime().exec(command).getInputStream()).useDelimiter("\\A");
+	            if(scanner.hasNext()) output = scanner.next();
+	        }catch (IOException e){
+	           throw new RuntimeException(e.getMessage());
+	        }
+	        return output;
 
 	    public static void killServer(){
 	        command("adb kill-server");

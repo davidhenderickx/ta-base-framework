@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
+
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
@@ -33,10 +35,19 @@ import frmwrk.settings.RunSettings;
 public class BaseElement {
 
 	public int defaultTimeOut = 20000;
-	public By elementLocator;
+	
+	public By by;
 	
 	public BaseElement() {
 		
+	}
+	
+	public BaseElement(Locator locator) {
+		this.by = locator.getLocator();
+	}
+	
+	public BaseElement(By by) {
+		this.by = by;
 	}
 	
 	/**
@@ -45,7 +56,7 @@ public class BaseElement {
 	 * @return the locator
 	 */
 	public By getLocator() {
-		return elementLocator;
+		return by;
 	}
 
 	public WebElement getElement(By locator) {
@@ -54,6 +65,10 @@ public class BaseElement {
 
 	public WebElement getWebElement(By locator) {
 		return DriverManager.getWebDriver().findElement(locator);
+	}
+	
+	public List<WebElement> getWebElements(By locator) {
+		return DriverManager.getWebDriver().findElements(locator);
 	}
 
 	public WebElement getMobileElement(By locator) {
@@ -69,7 +84,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public void waitUntilElementIsPresent(int milliseconds) {
-		waitUntilElementIsPresent(elementLocator, milliseconds, true);
+		waitUntilElementIsPresent(by, milliseconds, true);
 	}
 	
 	/**
@@ -153,7 +168,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public void waitUntilElementIsVisible(int milliseconds) {
-		waitUntilElementIsVisible(elementLocator, milliseconds, true);
+		waitUntilElementIsVisible(by, milliseconds, true);
 	}
 
 	/**
@@ -228,7 +243,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public boolean waitUntilElementIsNotVisible(int milliseconds){
-		return waitUntilElementIsNotVisible(elementLocator, milliseconds, true);
+		return waitUntilElementIsNotVisible(by, milliseconds, true);
 	}
 	
 	/**
@@ -299,7 +314,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public void waitUntilElementContainsText(String text, int milliseconds) {
-		waitUntilElementContainsText(elementLocator, text, milliseconds, true);
+		waitUntilElementContainsText(by, text, milliseconds, true);
 	}
 	
 	
@@ -335,7 +350,7 @@ public class BaseElement {
 	 * 
 	 */
 	public boolean isElementPresent() {
-		return isElementPresent(elementLocator, defaultTimeOut);
+		return isElementPresent(by, defaultTimeOut);
 	}
 	
 	/**
@@ -345,7 +360,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public boolean isElementPresent(int milliseconds) {
-		return isElementPresent(elementLocator, milliseconds);
+		return isElementPresent(by, milliseconds);
 	}
 	
 	/**
@@ -367,7 +382,7 @@ public class BaseElement {
 	 * 
 	 */
 	public boolean isElementVisible() {
-		return isElementVisible(elementLocator, defaultTimeOut);
+		return isElementVisible(by, defaultTimeOut);
 	}
 	
 	/**
@@ -376,7 +391,7 @@ public class BaseElement {
 	 * @param milliseconds
 	 */
 	public boolean isElementVisible(int milliseconds) {
-		return isElementVisible(elementLocator, milliseconds);
+		return isElementVisible(by, milliseconds);
 	}
 	
 	
@@ -417,7 +432,7 @@ public class BaseElement {
 	 * 
 	 */
 	public void click() {
-		click(elementLocator);
+		click(by);
 	}
 
 	/**
@@ -477,7 +492,7 @@ public class BaseElement {
 	 * @param text
 	 */
 	public void setText(String text) {
-		setText(elementLocator, text);
+		setText(by, text);
 	}
 
 	/**
@@ -493,16 +508,18 @@ public class BaseElement {
 	/**
 	 * Removes the existing text and adds the new text
 	 * 
-	 * @param elementLocator
+	 * @param by
 	 * @param text
 	 */
 	public void setText(By elementlocator, String text) {
+		Log.debug("Setting the text of " + elementlocator.toString() + ": " + text);
 		waitUntilElementIsPresent(elementlocator, defaultTimeOut);
 		waitUntilElementIsVisible(elementlocator, defaultTimeOut);
 		WebElement element = getElement(elementlocator);
 		element.click();
 		element.clear();
 		element.sendKeys(text);
+		Log.debug("Text set of " + elementlocator.toString() + ": " + text);
 		// element.sendKeys(Keys.TAB); // onchange event will not fire until a different
 		// element is selected
 
@@ -512,7 +529,7 @@ public class BaseElement {
 	 * Get the text of the element
 	 */
 	public String getText() {
-		return getText(elementLocator);
+		return getText(by);
 	}
 
 	/**
@@ -643,7 +660,7 @@ public class BaseElement {
 	 * When that occurs, it could be that the element is also not found in the DOM.
 	 */
 	public void swipeVerticalIntoView() {
-		swipeVerticalIntoView(elementLocator);
+		swipeVerticalIntoView(by);
 	}
 	
 	/***
@@ -767,7 +784,7 @@ public class BaseElement {
 	 * 
 	 */
 	public void swipeHorizontalIntoView(By elementToFind) {
-		swipeHorizontalIntoView(elementLocator, elementToFind);
+		swipeHorizontalIntoView(by, elementToFind);
 	}
 	
 	/***
